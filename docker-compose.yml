@@ -1,0 +1,18 @@
+# Có nhiều version của docker-compose, ở đây mình chọn version 3. Cũng còn tuỳ vào dự án nên bạn tuỳ biến version nhé, lưu ý mỗi version sẽ có cú pháp khác nhau.
+version: '3'
+# Tạo một service với tên là test-db để lưu trữ MySQL trên container thay vì sử dụng dưới local
+services:
+  test-db:
+    image: mysql:5.5
+    container_name: test-db
+    ports:
+      - "3306:3306"
+    # volumes:
+    #   - ./my.cnf:/etc/mysql/my.cnf
+    environment:
+      # Các thông số này thay đổi theo password mysql trên máy bạn nhé.
+      MYSQL_ROOT_PASSWORD: password #
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: user_testdb
+      MYSQL_PASSWORD: password
+    command: mysqld --datadir=/var/lib/mysql --user=mysql --server-id=1 --log-bin=/var/lib/mysql/mysql-bin.log --binlog_do_db=testdb --binlog-format=row
